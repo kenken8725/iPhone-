@@ -12,6 +12,7 @@ body{
   margin:0;
   padding:25px 15px;
 }
+
 .card{
   max-width:430px;
   margin:auto;
@@ -19,7 +20,11 @@ body{
   border-radius:24px;
   padding:25px;
 }
-h1{font-size:24px}
+
+h1{
+  font-size:24px;
+}
+
 .item{
   display:flex;
   justify-content:space-between;
@@ -27,18 +32,24 @@ h1{font-size:24px}
   padding:16px 0;
   border-bottom:1px solid #eee;
 }
+
 .switch{
   width:50px;
   height:30px;
   position:relative;
 }
-.switch input{display:none}
+
+.switch input{
+  display:none;
+}
+
 .slider{
   position:absolute;
   inset:0;
   background:#d1d1d6;
   border-radius:30px;
 }
+
 .slider:before{
   content:"";
   position:absolute;
@@ -50,10 +61,15 @@ h1{font-size:24px}
   border-radius:50%;
   transition:.2s;
 }
-input:checked + .slider{background:#34c759}
+
+input:checked + .slider{
+  background:#34c759;
+}
+
 input:checked + .slider:before{
   transform:translateX(20px);
 }
+
 button{
   width:100%;
   margin-top:25px;
@@ -113,6 +129,11 @@ button{
 </div>
 
 <script>
+
+function createUUID(){
+  return crypto.randomUUID().toUpperCase();
+}
+
 document.getElementById("create").onclick=function(){
 
 let settings="";
@@ -129,46 +150,69 @@ settings+="<key>allowCamera</key><false/>";
 if(document.getElementById("screen").checked)
 settings+="<key>allowScreenShot</key><false/>";
 
+const payloadUUID=createUUID();
+const profileUUID=createUUID();
+
 const profile=`<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
 "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+
 <plist version="1.0">
 <dict>
+
 <key>PayloadContent</key>
 <array>
+
 <dict>
+
 <key>PayloadDescription</key>
 <string>iPhoneの制限設定</string>
+
 <key>PayloadDisplayName</key>
 <string>iPhone制限</string>
+
 <key>PayloadIdentifier</key>
 <string>com.kenken.restrictions</string>
+
 <key>PayloadOrganization</key>
 <string>KenKen</string>
+
 <key>PayloadType</key>
 <string>com.apple.applicationaccess</string>
+
 <key>PayloadUUID</key>
-<string>550E8400-E29B-41D4-A716-446655440000</string>
+<string>${payloadUUID}</string>
+
 <key>PayloadVersion</key>
 <integer>1</integer>
+
 ${settings}
+
 </dict>
+
 </array>
 
 <key>PayloadDisplayName</key>
 <string>KenKen iPhone Profile</string>
+
 <key>PayloadIdentifier</key>
 <string>com.kenken.iphone.profile</string>
+
 <key>PayloadOrganization</key>
 <string>KenKen</string>
+
 <key>PayloadRemovalDisallowed</key>
 <false/>
+
 <key>PayloadType</key>
 <string>Configuration</string>
+
 <key>PayloadUUID</key>
-<string>550E8400-E29B-41D4-A716-446655440001</string>
+<string>${profileUUID}</string>
+
 <key>PayloadVersion</key>
 <integer>1</integer>
+
 </dict>
 </plist>`;
 
@@ -180,14 +224,20 @@ const blob=new Blob(
 const url=URL.createObjectURL(blob);
 
 const a=document.createElement("a");
+
 a.href=url;
 a.download="KenKen-iPhone-Profile.mobileconfig";
+
 document.body.appendChild(a);
 a.click();
 a.remove();
 
-setTimeout(()=>URL.revokeObjectURL(url),2000);
+setTimeout(()=>{
+  URL.revokeObjectURL(url);
+},2000);
+
 };
+
 </script>
 
 </body>
