@@ -6,135 +6,64 @@
 <title>iPhoneプロファイル作成</title>
 
 <style>
-* {
-    box-sizing: border-box;
+body{
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  background:#f2f2f7;
+  margin:0;
+  padding:25px 15px;
 }
-
-body {
-    margin: 0;
-    padding: 25px 15px 50px;
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-    background: #f2f2f7;
-    color: #111;
+.card{
+  max-width:430px;
+  margin:auto;
+  background:white;
+  border-radius:24px;
+  padding:25px;
 }
-
-.card {
-    max-width: 430px;
-    margin: auto;
-    background: white;
-    border-radius: 24px;
-    padding: 24px;
-    box-shadow: 0 8px 30px rgba(0,0,0,.08);
+h1{font-size:24px}
+.item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 0;
+  border-bottom:1px solid #eee;
 }
-
-h1 {
-    font-size: 25px;
-    margin: 0 0 8px;
+.switch{
+  width:50px;
+  height:30px;
+  position:relative;
 }
-
-.subtitle {
-    color: #666;
-    margin-bottom: 25px;
+.switch input{display:none}
+.slider{
+  position:absolute;
+  inset:0;
+  background:#d1d1d6;
+  border-radius:30px;
 }
-
-.section {
-    margin-top: 22px;
+.slider:before{
+  content:"";
+  position:absolute;
+  width:26px;
+  height:26px;
+  left:2px;
+  top:2px;
+  background:white;
+  border-radius:50%;
+  transition:.2s;
 }
-
-.section-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: #777;
-    margin: 0 0 8px 5px;
+input:checked + .slider{background:#34c759}
+input:checked + .slider:before{
+  transform:translateX(20px);
 }
-
-.setting {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 4px;
-    border-bottom: 1px solid #eee;
-}
-
-.setting:last-child {
-    border-bottom: none;
-}
-
-.name {
-    font-size: 16px;
-}
-
-.desc {
-    font-size: 12px;
-    color: #888;
-    margin-top: 3px;
-}
-
-/* スイッチ */
-.switch {
-    position: relative;
-    width: 51px;
-    height: 31px;
-    flex-shrink: 0;
-    margin-left: 15px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    inset: 0;
-    background: #d1d1d6;
-    border-radius: 31px;
-    transition: .2s;
-}
-
-.slider:before {
-    content: "";
-    position: absolute;
-    width: 27px;
-    height: 27px;
-    left: 2px;
-    top: 2px;
-    background: white;
-    border-radius: 50%;
-    box-shadow: 0 2px 5px rgba(0,0,0,.2);
-    transition: .2s;
-}
-
-input:checked + .slider {
-    background: #34c759;
-}
-
-input:checked + .slider:before {
-    transform: translateX(20px);
-}
-
-.create {
-    width: 100%;
-    border: 0;
-    border-radius: 15px;
-    padding: 16px;
-    margin-top: 28px;
-    background: #007aff;
-    color: white;
-    font-size: 17px;
-    font-weight: 700;
-}
-
-.create:active {
-    opacity: .7;
-}
-
-.note {
-    font-size: 12px;
-    color: #777;
-    line-height: 1.5;
-    margin-top: 16px;
+button{
+  width:100%;
+  margin-top:25px;
+  padding:16px;
+  border:0;
+  border-radius:14px;
+  background:#007aff;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
 }
 </style>
 </head>
@@ -145,246 +74,120 @@ input:checked + .slider:before {
 
 <h1>⚙️ iPhoneプロファイル作成</h1>
 
-<div class="subtitle">
-設定を選択して構成プロファイルを作成します。
-</div>
+<p>禁止したい項目をONにしてください。</p>
 
-<div class="section">
-<div class="section-title">アプリ</div>
-
-<div class="setting">
-<div>
-<div class="name">アプリのインストールを禁止</div>
-<div class="desc">App Storeなどからのインストールを禁止</div>
-</div>
+<div class="item">
+<span>アプリのインストール</span>
 <label class="switch">
-<input type="checkbox" id="appInstall">
+<input type="checkbox" id="install">
 <span class="slider"></span>
 </label>
 </div>
 
-<div class="setting">
-<div>
-<div class="name">アプリの削除を禁止</div>
-<div class="desc">アプリの削除を禁止</div>
-</div>
+<div class="item">
+<span>アプリの削除</span>
 <label class="switch">
-<input type="checkbox" id="appRemove">
+<input type="checkbox" id="remove">
 <span class="slider"></span>
 </label>
 </div>
 
-<div class="setting">
-<div>
-<div class="name">App Storeを禁止</div>
-<div class="desc">App Storeの使用を禁止</div>
-</div>
-<label class="switch">
-<input type="checkbox" id="appStore">
-<span class="slider"></span>
-</label>
-</div>
-
-</div>
-
-<div class="section">
-<div class="section-title">iPhoneの機能</div>
-
-<div class="setting">
-<div>
-<div class="name">カメラを禁止</div>
-<div class="desc">カメラの使用を禁止</div>
-</div>
+<div class="item">
+<span>カメラ</span>
 <label class="switch">
 <input type="checkbox" id="camera">
 <span class="slider"></span>
 </label>
 </div>
 
-<div class="setting">
-<div>
-<div class="name">AirDropを禁止</div>
-<div class="desc">AirDropを使用できなくする</div>
-</div>
+<div class="item">
+<span>スクリーンショット</span>
 <label class="switch">
-<input type="checkbox" id="airdrop">
+<input type="checkbox" id="screen">
 <span class="slider"></span>
 </label>
 </div>
 
-<div class="setting">
-<div>
-<div class="name">スクリーンショットを禁止</div>
-<div class="desc">スクリーンショット・画面収録を禁止</div>
-</div>
-<label class="switch">
-<input type="checkbox" id="screenshot">
-<span class="slider"></span>
-</label>
-</div>
-
-<div class="setting">
-<div>
-<div class="name">Siriを禁止</div>
-<div class="desc">Siriの使用を禁止</div>
-</div>
-<label class="switch">
-<input type="checkbox" id="siri">
-<span class="slider"></span>
-</label>
-</div>
-
-</div>
-
-<button class="create" id="create">
-プロファイルを作成
-</button>
-
-<div class="note">
-※設定によっては、監視対象（Supervised）端末などの条件が必要です。
-</div>
+<button id="create">プロファイルを作成</button>
 
 </div>
 
 <script>
-function uuid() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
-        const r = Math.random() * 16 | 0;
-        const v = c === "x" ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-}
+document.getElementById("create").onclick=function(){
 
-function esc(value) {
-    return value
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;");
-}
+let settings="";
 
-document.getElementById("create").addEventListener("click", function() {
+if(document.getElementById("install").checked)
+settings+="<key>allowAppInstallation</key><false/>";
 
-    const restrictions = {};
+if(document.getElementById("remove").checked)
+settings+="<key>allowAppRemoval</key><false/>";
 
-    if (document.getElementById("appInstall").checked) {
-        restrictions.allowAppInstallation = false;
-    }
+if(document.getElementById("camera").checked)
+settings+="<key>allowCamera</key><false/>";
 
-    if (document.getElementById("appRemove").checked) {
-        restrictions.allowAppRemoval = false;
-    }
+if(document.getElementById("screen").checked)
+settings+="<key>allowScreenShot</key><false/>";
 
-    if (document.getElementById("appStore").checked) {
-        restrictions.allowAppStore = false;
-    }
-
-    if (document.getElementById("camera").checked) {
-        restrictions.allowCamera = false;
-    }
-
-    if (document.getElementById("airdrop").checked) {
-        restrictions.allowAirDrop = false;
-    }
-
-    if (document.getElementById("screenshot").checked) {
-        restrictions.allowScreenShot = false;
-    }
-
-    if (document.getElementById("siri").checked) {
-        restrictions.allowSiri = false;
-    }
-
-    let restrictionXML = "";
-
-    for (const key in restrictions) {
-        restrictionXML += `
-            <key>${key}</key>
-            <false/>
-        `;
-    }
-
-    const payloadUUID = uuid();
-    const profileUUID = uuid();
-
-    const profile = `<?xml version="1.0" encoding="UTF-8"?>
+const profile=`<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
 "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-
 <key>PayloadContent</key>
 <array>
-
 <dict>
 <key>PayloadDescription</key>
 <string>iPhoneの制限設定</string>
-
 <key>PayloadDisplayName</key>
 <string>iPhone制限</string>
-
 <key>PayloadIdentifier</key>
-<string>com.kenken.iphone.restrictions</string>
-
+<string>com.kenken.restrictions</string>
 <key>PayloadOrganization</key>
 <string>KenKen</string>
-
 <key>PayloadType</key>
 <string>com.apple.applicationaccess</string>
-
 <key>PayloadUUID</key>
-<string>${payloadUUID}</string>
-
+<string>550E8400-E29B-41D4-A716-446655440000</string>
 <key>PayloadVersion</key>
 <integer>1</integer>
-
-${restrictionXML}
-
+${settings}
 </dict>
-
 </array>
 
 <key>PayloadDisplayName</key>
 <string>KenKen iPhone Profile</string>
-
 <key>PayloadIdentifier</key>
 <string>com.kenken.iphone.profile</string>
-
 <key>PayloadOrganization</key>
 <string>KenKen</string>
-
 <key>PayloadRemovalDisallowed</key>
 <false/>
-
 <key>PayloadType</key>
 <string>Configuration</string>
-
 <key>PayloadUUID</key>
-<string>${profileUUID}</string>
-
+<string>550E8400-E29B-41D4-A716-446655440001</string>
 <key>PayloadVersion</key>
 <integer>1</integer>
-
 </dict>
 </plist>`;
 
-    const blob = new Blob(
-        [profile],
-        { type: "application/x-apple-aspen-config" }
-    );
+const blob=new Blob(
+[profile],
+{type:"application/x-apple-aspen-config"}
+);
 
-    const url = URL.createObjectURL(blob);
+const url=URL.createObjectURL(blob);
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "KenKen-iPhone-Profile.mobileconfig";
+const a=document.createElement("a");
+a.href=url;
+a.download="KenKen-iPhone-Profile.mobileconfig";
+document.body.appendChild(a);
+a.click();
+a.remove();
 
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-});
+setTimeout(()=>URL.revokeObjectURL(url),2000);
+};
 </script>
 
 </body>
