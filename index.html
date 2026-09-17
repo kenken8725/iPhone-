@@ -130,37 +130,60 @@ button{
 
 <script>
 
-function createUUID(){
+function uuid(){
   return crypto.randomUUID().toUpperCase();
 }
 
 document.getElementById("create").onclick=function(){
 
-let settings="";
+  let settings="";
 
-if(document.getElementById("install").checked)
-settings+="<key>allowAppInstallation</key><false/>";
+  if(document.getElementById("install").checked){
+    settings += `
+<key>allowAppInstallation</key>
+<false/>`;
+  }
 
-if(document.getElementById("remove").checked)
-settings+="<key>allowAppRemoval</key><false/>";
+  if(document.getElementById("remove").checked){
+    settings += `
+<key>allowAppRemoval</key>
+<false/>`;
+  }
 
-if(document.getElementById("camera").checked)
-settings+="<key>allowCamera</key><false/>";
+  if(document.getElementById("camera").checked){
+    settings += `
+<key>allowCamera</key>
+<false/>`;
+  }
 
-if(document.getElementById("screen").checked)
-settings+="<key>allowScreenShot</key><false/>";
+  if(document.getElementById("screen").checked){
+    settings += `
+<key>allowScreenShot</key>
+<false/>`;
+  }
 
-const payloadUUID=createUUID();
-const profileUUID=createUUID();
+  /* 毎回完全に新しいUUIDを作る */
+  const profileUUID = uuid();
+  const payloadUUID = uuid();
 
-const profile=`<?xml version="1.0" encoding="UTF-8"?>
+  /* Identifierも毎回変える */
+  const profileIdentifier =
+    "com.kenken.iphone.profile." + profileUUID;
+
+  const payloadIdentifier =
+    "com.kenken.restrictions." + payloadUUID;
+
+  const profile = `<?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
 "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 
 <plist version="1.0">
+
 <dict>
 
 <key>PayloadContent</key>
+
 <array>
 
 <dict>
@@ -172,7 +195,7 @@ const profile=`<?xml version="1.0" encoding="UTF-8"?>
 <string>iPhone制限</string>
 
 <key>PayloadIdentifier</key>
-<string>com.kenken.restrictions</string>
+<string>${payloadIdentifier}</string>
 
 <key>PayloadOrganization</key>
 <string>KenKen</string>
@@ -196,7 +219,7 @@ ${settings}
 <string>KenKen iPhone Profile</string>
 
 <key>PayloadIdentifier</key>
-<string>com.kenken.iphone.profile</string>
+<string>${profileIdentifier}</string>
 
 <key>PayloadOrganization</key>
 <string>KenKen</string>
@@ -214,27 +237,28 @@ ${settings}
 <integer>1</integer>
 
 </dict>
+
 </plist>`;
 
-const blob=new Blob(
-[profile],
-{type:"application/x-apple-aspen-config"}
-);
+  const blob = new Blob(
+    [profile],
+    {type:"application/x-apple-aspen-config"}
+  );
 
-const url=URL.createObjectURL(blob);
+  const url = URL.createObjectURL(blob);
 
-const a=document.createElement("a");
+  const a = document.createElement("a");
 
-a.href=url;
-a.download="KenKen-iPhone-Profile.mobileconfig";
+  a.href = url;
+  a.download = "KenKen-iPhone-Profile.mobileconfig";
 
-document.body.appendChild(a);
-a.click();
-a.remove();
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
 
-setTimeout(()=>{
-  URL.revokeObjectURL(url);
-},2000);
+  setTimeout(function(){
+    URL.revokeObjectURL(url);
+  },2000);
 
 };
 
